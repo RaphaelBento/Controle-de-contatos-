@@ -1,0 +1,75 @@
+﻿@model List<ContatoModel>
+@{
+    ViewData["Title"] = "Listagem de contatos";
+}
+<div class="text-center">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-info" role="button" asp-controller="Contato" asp-action="Criar"><img src="~/Images/caderno.png" alt="Imagem agenda" style="height:30px;width:30px;"> Adicionar contato</a>
+    </div><br />
+
+    @if (TempData["MensagemAprovacao"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemAprovacao"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            TempData["MensagemErro"]
+        </div>
+
+    }
+   
+    <h1 class="display-4" style="color:white">Listagem de contatos</h1>
+
+    @if (Model != null && Model.Any())
+    {
+    <table class="table" id="Tabela">
+        <thead>
+            <tr>
+              
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Celular</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+                @foreach (ContatoModel contato in Model)
+                {
+                    <tr>
+                        
+                        <td>@contato.Nome</td>
+                        <td>@contato.Email</td>
+                        <td>@contato.Celular</td>
+                        <td>
+                            <div class="" role="group">
+                                <a role="button" class="btn btn-primary" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Editar" >
+                                    <img src="~/Images/Editar.png" alt="Imagem agenda editar" style="height:30px;width:30px;"/>
+                                    Editar
+                                </a>
+                              
+                                <a role="button" class="btn btn-danger" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="ApagarConfirmacao">
+                                    <img src="~/Images/lixeira.png" alt="Imagem lixeira" style="height:30px;width:30px;"/>
+                                    Apagar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            
+
+        </tbody>
+    </table>
+    }
+    else 
+    { 
+    <div>
+        <h4>Ainda não há contatos cadastrados no sistema</h4>
+    </div>
+    }
+</div>
